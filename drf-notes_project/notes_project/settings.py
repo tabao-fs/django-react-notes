@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'corsheaders',
     'rest_framework',
+    'channels',
 
     'notes',
 ]
@@ -128,3 +129,14 @@ STATIC_URL = '/static/'
 CORS_ORIGIN_WHITELIST = (
     'http://localhost: 3000',
 )
+
+ASGI_APPLICATION = "notes_project.routing.application"
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannel',
+        'CONFIG': {
+            'HOSTS': [('127.0.0.1', 6379)]
+        }
+    }
+}
