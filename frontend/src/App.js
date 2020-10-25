@@ -23,6 +23,8 @@ class App extends Component {
     this.getData = this.getData.bind(this);
     this.handleSaveNote = this.handleSaveNote.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
+
+    this.myRef = React.createRef();
   };
 
   componentDidMount() {
@@ -69,7 +71,7 @@ class App extends Component {
       note: current_note
     })
 
-    const socket = this.refs.socket;
+    const socket = this.myRef.socket;
     socket.state.ws.send(JSON.stringify(current_note));
   }
 
