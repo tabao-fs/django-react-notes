@@ -4,7 +4,7 @@ from .models import Note
 from .serializers import NoteSerializer
 
 class NoteList(generics.ListCreateAPIView):
-    queryset = Note.objects.all()
+    queryset = Note.objects.all().order_by('-created_at', '-updated_at')
     serializer_class = NoteSerializer
 
 
