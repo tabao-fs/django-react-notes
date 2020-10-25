@@ -40,11 +40,11 @@ class App extends Component {
   handleAddNote() {
     this.setState((prevState) => {
       return { is_creating: true }
-    })
+    });
   }
 
   async handleSaveNote(data) {
-    await addNote(data)
+    await addNote(data);
     await this.getData();
   }
 
@@ -65,7 +65,6 @@ class App extends Component {
               <ListNotes notes={this.state.notes} handleItemClick={(id) => this.handleItemClick(id)} />
             </Col>
             <Col xs="8">
-              <p>Content/Editing here...</p>
               {
                 this.state.is_creating ?
                 <AddNoteForm handleSave={this.handleSaveNote} /> :
