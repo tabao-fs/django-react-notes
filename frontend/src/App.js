@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Container, Row, Col } from 'reactstrap';
+import WebSocket from 'react-websocket';
 
 import ListNotes from './components/ListNotes';
 import AddNoteForm from './components/AddNoteForm';
@@ -11,6 +12,7 @@ class App extends Component {
 
     this.state = {
       notes: [],
+      note: {},
       current_note_id: 0,
       is_creating: true,
       is_fetching: true
@@ -48,6 +50,15 @@ class App extends Component {
     this.getData();
   }
 
+  handleData(data) {
+    let result = JSON.parse(data);
+    let current_note = this.state.notes;
+
+    if (current_note.id === result.id) {
+      this.setState({ note: result });
+    }
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -70,6 +81,8 @@ class App extends Component {
                 <AddNoteForm handleSave={this.handleSaveNote} /> :
                 `Editing note with id: ${this.state.current_note_id}`
               }
+              <Websocket ref="socket" url='ws://localhost:8000/ws/notes'
+                onMessage={this.handleData.bind(this)}/>
             </Col>
           </Row>
         </Container>
