@@ -61,7 +61,7 @@ class App extends Component {
 
   handleData(data) {
     let result = JSON.parse(data);
-    let current_note = this.state.notes;
+    let current_note = this.state.note;
 
     if (current_note.id === result.id) {
       this.setState({ note: result });
@@ -75,9 +75,9 @@ class App extends Component {
 
     this.setState({
       note: current_note
-    })
+    });
 
-    const socket = this.myRef.socket;
+    const socket = this.myRef.current.socket;
     socket.state.ws.send(JSON.stringify(current_note));
   }
 
@@ -103,7 +103,7 @@ class App extends Component {
                 <AddNoteForm handleSave={this.handleSaveNote} /> :
                 <EditNoteForm handleChange={this.handleOnChange} note={this.state.note}/>
               }
-              <Websocket myRef="socket" url='ws://localhost:8000/ws/notes'
+              <Websocket ref={this.myRef} url='ws://localhost:8000/ws/notes'
                 onMessage={this.handleData.bind(this)}/>
             </Col>
           </Row>
