@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Button, Container, Row, Col } from 'reactstrap';
-import WebSocket from 'react-websocket';
+import Websocket from 'react-websocket';
 
 import ListNotes from './components/ListNotes';
 import AddNoteForm from './components/AddNoteForm';
+import EditNoteForm from './components/EditNoteForm';
 import { fetchNotes, fetchNote, updateNote, addNote } from './api';
 
 class App extends Component {
