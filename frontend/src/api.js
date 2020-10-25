@@ -12,7 +12,7 @@ export const fetchNote = (id) => {
   return fetch(`${url + id}`, {})
   .then(res => res.json())
   .then(data => {
-    console.log(data);
+    return data
   });
 }
 

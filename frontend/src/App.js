@@ -77,7 +77,7 @@ class App extends Component {
       note: current_note
     });
 
-    const socket = this.myRef.current.socket;
+    const socket = this.myRef.current;
     socket.state.ws.send(JSON.stringify(current_note));
   }
 
