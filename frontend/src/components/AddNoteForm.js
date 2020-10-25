@@ -9,6 +9,8 @@ class AddNoteForm extends Component {
       title: '',
       content: ''
     };
+
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleSubmit = (e) => {
@@ -31,10 +33,10 @@ class AddNoteForm extends Component {
   render() {
     return (
       <Fragment>
-        <Form>
-          <FormGroup onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit}>
+          <FormGroup>
             <Label>Title</Label>
-            <Input name="title" type="text" value={this.state.title} />
+            <Input onChange={this.handleChange} name="title" type="text" value={this.state.title} />
           </FormGroup>
           <FormGroup>
             <Label>Content</Label>

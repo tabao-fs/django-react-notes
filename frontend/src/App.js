@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Button, Container, Row, Col } from 'reactstrap';
 
 import ListNotes from './components/ListNotes';
-import { fetchNotes, fetchNote, updateNote } from './api';
+import AddNoteForm from './components/AddNoteForm';
+import { fetchNotes, fetchNote, updateNote, addNote } from './api';
 
 class App extends Component {
   constructor(props) {
@@ -18,11 +19,11 @@ class App extends Component {
     this.handleItemClick = this.handleItemClick.bind(this);
     this.handleAddNote = this.handleAddNote.bind(this);
     this.getData = this.getData.bind(this);
+    this.handleSaveNote = this.handleSaveNote.bind(this);
   };
 
   componentDidMount() {
     this.getData();
-    console.log(this.state.notes);
   }
 
   async getData() {
@@ -40,6 +41,11 @@ class App extends Component {
     this.setState((prevState) => {
       return { is_creating: true }
     })
+  }
+
+  async handleSaveNote(data) {
+    await addNote(data)
+    await this.getData();
   }
 
   render() {
@@ -62,7 +68,7 @@ class App extends Component {
               <p>Content/Editing here...</p>
               {
                 this.state.is_creating ?
-                "Creating now..." :
+                <AddNoteForm handleSave={this.handleSaveNote} /> :
                 `Editing note with id: ${this.state.current_note_id}`
               }
             </Col>
