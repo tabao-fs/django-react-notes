@@ -45,7 +45,7 @@ class App extends Component {
 
   async handleSaveNote(data) {
     await addNote(data);
-    await this.getData();
+    this.getData();
   }
 
   render() {
