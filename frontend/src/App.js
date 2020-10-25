@@ -36,7 +36,6 @@ class App extends Component {
   };
 
   handleItemClick(id) {
-    console.log("id", id);
     this.setState((prevState) => {
       return { is_creating: false, current_note_id: id }
     });
