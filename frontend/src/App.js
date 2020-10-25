@@ -19,7 +19,7 @@ var notes_temp = [
     'title': 'third note',
     'content': 'this is the third content'
   }
-]
+];
 
 class App extends Component {
   constructor(props) {
@@ -29,13 +29,23 @@ class App extends Component {
       notes: notes_temp,
       current_note_id: 0,
       is_creating: true
-    }
+    };
 
     this.handleItemClick = this.handleItemClick.bind(this);
+    this.handleAddNote = this.handleAddNote.bind(this);
   };
 
   handleItemClick(id) {
     console.log("id", id);
+    this.setState((prevState) => {
+      return { is_creating: false, current_note_id: id }
+    });
+  }
+
+  handleAddNote() {
+    this.setState((prevState) => {
+      return { is_creating: true }
+    })
   }
 
   render() {
@@ -47,7 +57,7 @@ class App extends Component {
               <h2>Realtime notes</h2>
             </Col>
             <Col xs="2">
-              <Button color="primary">Create a new note</Button>
+              <Button color="primary" onClick={this.handleAddNote}>Create a new note</Button>
             </Col>
           </Row>
           <Row>
@@ -56,6 +66,11 @@ class App extends Component {
             </Col>
             <Col xs="8">
               <p>Content/Editing here...</p>
+              {
+                this.state.is_creating ?
+                "Creating now..." :
+                `Editing note with id: ${this.state.current_note_id}`
+              }
             </Col>
           </Row>
         </Container>
