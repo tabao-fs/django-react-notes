@@ -5,7 +5,7 @@ import Websocket from 'react-websocket';
 import ListNotes from './components/ListNotes';
 import AddNoteForm from './components/AddNoteForm';
 import EditNoteForm from './components/EditNoteForm';
-import { fetchNotes, fetchNote, updateNote, addNote } from './api';
+import { fetchNotes, fetchNote, addNote } from './api';
 
 class App extends Component {
   constructor(props) {
@@ -37,9 +37,14 @@ class App extends Component {
     this.setState({ notes: data });
   }
 
-  handleItemClick(id) {
+  async handleItemClick(id) {
+    let selected_note = await fetchNote(id);
     this.setState((prevState) => {
-      return { is_creating: false, current_note_id: id }
+      return {
+        is_creating: false,
+        current_note_id: id,
+        note: selected_note
+      }
     });
   }
 
@@ -98,7 +103,7 @@ class App extends Component {
                 <AddNoteForm handleSave={this.handleSaveNote} /> :
                 <EditNoteForm handleChange={this.handleOnChange} note={this.state.note}/>
               }
-              <Websocket ref="socket" url='ws://localhost:8000/ws/notes'
+              <Websocket myRef="socket" url='ws://localhost:8000/ws/notes'
                 onMessage={this.handleData.bind(this)}/>
             </Col>
           </Row>
