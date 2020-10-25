@@ -22,6 +22,7 @@ class App extends Component {
     this.handleAddNote = this.handleAddNote.bind(this);
     this.getData = this.getData.bind(this);
     this.handleSaveNote = this.handleSaveNote.bind(this);
+    this.handleOnChange = this.handleOnChange.bind(this);
   };
 
   componentDidMount() {
@@ -59,6 +60,19 @@ class App extends Component {
     }
   }
 
+  handleOnChange(e) {
+    let content = e.target.value;
+    let current_note = this.state.note;
+    current_note.content = content;
+
+    this.setState({
+      note: current_note
+    })
+
+    const socket = this.refs.socket;
+    socket.state.ws.send(JSON.stringify(current_note));
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -79,7 +93,7 @@ class App extends Component {
               {
                 this.state.is_creating ?
                 <AddNoteForm handleSave={this.handleSaveNote} /> :
-                `Editing note with id: ${this.state.current_note_id}`
+                <EditNoteForm handleChange={this.handleOnChange} note={this.state.note}/>
               }
               <Websocket ref="socket" url='ws://localhost:8000/ws/notes'
                 onMessage={this.handleData.bind(this)}/>
