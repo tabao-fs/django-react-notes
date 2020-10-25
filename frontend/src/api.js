@@ -9,11 +9,11 @@ export const fetchNotes = async() => {
 }
 
 export const fetchNote = (id) => {
-  return {
-    'id': 123,
-    'title': 'Hello',
-    'content': 'Testing...'
-  }
+  return fetch(`${url + id}`, {})
+  .then(res => res.json())
+  .then(data => {
+    console.log(data);
+  });
 }
 
 export const addNote = (note) => {
